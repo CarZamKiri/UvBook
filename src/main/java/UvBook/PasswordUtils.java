@@ -15,4 +15,3 @@ public class PasswordUtils {
         return encoder.matches(rawPassword, hashedPassword);
     }
 }
-
