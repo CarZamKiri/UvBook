@@ -11,13 +11,13 @@
 <body>
 <div class="container" id="container">
     <div class="form-container sign-up">
-        <form>
+        <form action="/register" method="POST">
             <h1>Crear cuenta</h1>
             <span>Usa tu Email para registrarte</span>
-            <input type="text" placeholder="Nombre" />
-            <input type="email" placeholder="Correo" />
-            <input type="password" placeholder="Contraseña" />
-            <button>Registrar</button>
+            <input type="text" name="username" placeholder="Nombre" required />
+            <input type="email" name="email" placeholder="Correo" required />
+            <input type="password" name="password" placeholder="Contraseña" required />
+            <button type="submit">Registrar</button>
         </form>
     </div>
     <div class="form-container sign-in">
