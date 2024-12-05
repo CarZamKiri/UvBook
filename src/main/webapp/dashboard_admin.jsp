@@ -24,13 +24,13 @@
                 <h3>Preguntas Publicadas</h3>
                 <ul>
                     <li>
-                        <strong>Pregunta 1</strong>
-                        ¿Cómo implementar un método en Java?
+                        <strong>Juan Pérez</strong>
+                        ¿Alguien puede explicarme el concepto de herencia en Java?
                         <br><button onclick="deleteQuestion(1)">Eliminar</button>
                     </li>
                     <li>
-                        <strong>Pregunta 2</strong>
-                        ¿Qué es RMI en Java?
+                        <strong>María López</strong>
+                        ¿Qué libros recomiendan para aprender Estructura de Datos?
                         <br><button onclick="deleteQuestion(2)">Eliminar</button>
                     </li>
                 </ul>

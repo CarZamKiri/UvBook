@@ -24,13 +24,13 @@
                 <h3>Preguntas Pendientes</h3>
                 <ul>
                     <li>
-                        <strong>Pregunta 1</strong>
-                        ¿Cómo implementar un método en Java?
+                        <strong>Juan Pérez</strong>
+                        ¿Alguien puede explicarme el concepto de herencia en Java?
                         <br><a href="answer-question.jsp?id=1">Responder</a>
                     </li>
                     <li>
-                        <strong>Pregunta 2</strong>
-                        ¿Qué es RMI en Java?
+                        <strong>María López</strong>
+                        ¿Qué libros recomiendan para aprender Estructura de Datos?
                         <br><a href="answer-question.jsp?id=2">Responder</a>
                     </li>
                 </ul>
@@ -39,7 +39,7 @@
                 <h3>Preguntas Resueltas</h3>
                 <ul>
                     <li>
-                        <strong>Pregunta 3</strong>
+                        <strong>Alberto Caballero</strong>
                         ¿Cómo crear un archivo WAR?
                         <br><span>Respuesta enviada</span>
                     </li>
