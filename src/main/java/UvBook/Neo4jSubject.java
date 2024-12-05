@@ -1,5 +1,6 @@
 package UvBook;
 
+//Clase para agregar materias
 public class Neo4jSubject {
     private final Neo4jConnection connection;
 

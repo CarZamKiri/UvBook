@@ -19,7 +19,7 @@ public class Neo4jUserdata {
         this.password = password;
     }
 
-    public void create(){
+    public void create(String name, String first_lastName, String second_lastName, String email, String matricula, String password){
         String query = String.format("CREATE (U:User {name: '%s', first_lastname: '%s', second_lastname: '%s', email: '%s', matricula: '%s', password: '%s'})",
                 name, firs_lastName, second_lastName, email, matricula, password);
         connection.executeQuery(query);
