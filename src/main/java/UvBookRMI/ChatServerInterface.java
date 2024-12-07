@@ -1,4 +1,4 @@
-package UvBook;
+package UvBookRMI;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

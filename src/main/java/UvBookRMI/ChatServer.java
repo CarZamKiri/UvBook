@@ -1,4 +1,4 @@
-package UvBook;
+package UvBookRMI;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -25,7 +25,7 @@ public class ChatServer extends UnicastRemoteObject implements ChatServerInterfa
         try {
             java.rmi.registry.LocateRegistry.createRegistry(1099);
             ChatServerInterface chatServer = new ChatServer();
-            java.rmi.Naming.rebind("", chatServer);
+            java.rmi.Naming.rebind("rmi://localhost/ChatServer", chatServer);
             System.out.println("Servidor RMI del chat iniciado...");
         } catch (Exception e) {
             e.printStackTrace();

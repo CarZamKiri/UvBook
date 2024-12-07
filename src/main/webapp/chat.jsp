@@ -35,9 +35,13 @@
                     <h3>Chat con <span id="selected-user">[Selecciona un usuario]</span></h3>
                 </div>
                 <div id="chat-messages">
+                    <c:forEach var="message" items="${messages}">
+                        <div>${message}</div>
+                    </c:forEach>
                 </div>
-                <form id="chat-form" onsubmit="sendMessage(event)">
-                    <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." required>
+                <form id="chat-form" action="chat" method="post">
+                    <input type="hidden" name="username" value="${sessionScope.username}">
+                    <input type="text" name="message" placeholder="Escribe tu mensaje..." required>
                     <button type="submit">Enviar</button>
                 </form>
             </section>
