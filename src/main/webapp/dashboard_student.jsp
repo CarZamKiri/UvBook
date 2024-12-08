@@ -22,8 +22,9 @@
         <main>
             <div class="post-question">
                 <h3>Publicar una Pregunta</h3>
-                <form action="postQuestion" method="post">
+                <form action="Neo4jSvp" method="POST">
                     <textarea name="question" placeholder="Escribe tu pregunta aquí..." required></textarea>
+                    <input type="hidden" name="action" value="crearPregunta">
                     <button type="submit">Publicar</button>
                 </form>
             </div>

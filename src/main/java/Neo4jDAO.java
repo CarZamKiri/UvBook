@@ -31,6 +31,17 @@ public class Neo4jDAO {
         }
     }
 
+    public void crearPregunta(String texto){
+        try(Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+                tx.run("CREATE(p:pregunta{texto: $texto})", parameters("texto", texto));
+                return null;
+            });
+        }
+    }
+
+    
+
     public void close() {
         if (driver != null) {
             driver.close();
