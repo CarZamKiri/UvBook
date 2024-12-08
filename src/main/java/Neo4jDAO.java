@@ -31,6 +31,18 @@ public class Neo4jDAO {
         }
     }
 
+    public boolean validarInicioSesion(String correo, String contrasenia) {
+        try (Session session = driver.session()) {
+            return session.readTransaction(tx -> {
+                Result result = tx.run(
+                        "MATCH (e:estudiante {correo: $correo, contraseña: $contrasenia}) RETURN e",
+                        parameters("correo", correo, "contrasenia", contrasenia)
+                );
+                return result.hasNext(); // Si hay al menos un resultado, las credenciales son válidas.
+            });
+        }
+    }
+
     public void crearPregunta(String texto){
         try(Session session = driver.session()) {
             session.writeTransaction(tx -> {

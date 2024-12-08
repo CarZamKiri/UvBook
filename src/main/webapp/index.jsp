@@ -32,19 +32,20 @@
             <input type="password" id="contrasenia" name="contrasenia" required><br><br>
 
             <input type="hidden" name="action" value="crearEstudiante">
-            <input type="submit" value="Crear Estudiante">
+            <input type="submit" value="Registrarse">
         </form>
     </div>
     <div class="form-container sign-in">
-        <form>
-            <h1>Inicia Sesion</h1>
-
+        <form action="LoginServlet" method="post">
+            <h1>Inicia Sesión</h1>
             <span>UvBook</span>
-            <input type="email" placeholder="Correo" />
-            <input type="password" placeholder="Contraseña" />
-            <a href="#">Olvidaste tu password?</a>
-            <button>Iniciar Sesion</button>
+            <label for="emailLogin">Correo:</label>
+            <input type="email" id="emailLogin" name="emailLogin" required /><br>
+            <label for="contraseniaLogin">Contraseña:</label>
+            <input type="password" id="contraseniaLogin" name="contraseniaLogin" required /><br>
+            <button type="submit">Iniciar Sesión</button>
         </form>
+
     </div>
     <div class="toggle-container">
         <div class="toggle">
