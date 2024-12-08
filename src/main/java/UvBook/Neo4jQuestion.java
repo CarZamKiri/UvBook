@@ -1,13 +1,10 @@
 package UvBook;
 
-import org.neo4j.driver.Value;
-import org.neo4j.driver.Values;
-
-public class Neo4jQuestion {
-    private final Neo4jConnection connection;
+public class Neo4jQuestion {/*
+    private final Neo4jDAO connection;
     String question;
 
-    public Neo4jQuestion(Neo4jConnection connection, String question) {
+    public Neo4jQuestion(Neo4jDAO connection, String question) {
         this.connection = connection;
         this.question = question;
     }
@@ -25,6 +22,6 @@ public class Neo4jQuestion {
         connection.executeQuery(query);
 
     }
-
+*/
 
 }

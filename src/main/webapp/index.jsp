@@ -9,15 +9,30 @@
 </head>
 
 <body>
+<a href="dashboard_student.jsp"></a>
 <div class="container" id="container">
     <div class="form-container sign-up">
-        <form action="/register" method="POST">
-            <h1>Crear cuenta</h1>
-            <span>Usa tu Email para registrarte</span>
-            <input type="text" name="username" placeholder="Nombre" required />
-            <input type="email" name="email" placeholder="Correo" required />
-            <input type="password" name="password" placeholder="Contraseña" required />
-            <button type="submit">Registrar</button>
+        <form action="Neo4jServlet" method="get">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required><br><br>
+
+            <label for="ap_paterno">Apellido paterno:</label>
+            <input type="text" id="ap_paterno" name="ap_paterno" required><br><br>
+
+            <label for="ap_materno">Apellido materno:</label>
+            <input type="text" id="ap_materno" name="ap_materno" required><br><br>
+
+            <label for="matricula">Matricula:</label>
+            <input type="text" id="matricula" name="matricula" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="contrasenia">Contraseña:</label>
+            <input type="password" id="contrasenia" name="contrasenia" required><br><br>
+
+            <input type="hidden" name="action" value="crearEstudiante">
+            <input type="submit" value="Crear Estudiante">
         </form>
     </div>
     <div class="form-container sign-in">

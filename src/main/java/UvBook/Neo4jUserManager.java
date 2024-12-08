@@ -2,11 +2,11 @@ package UvBook;
 
 import org.neo4j.driver.*;
 
-public class Neo4jUserManager {
-    private final Neo4jConnection connection;
+public class Neo4jUserManager { /*
+    private final Neo4jDAO connection;
 
     // Constructor que recibe una conexión existente
-    public Neo4jUserManager(Neo4jConnection connection) {
+    public Neo4jUserManager(Neo4jDAO connection) {
         this.connection = connection;
     }
 
@@ -40,5 +40,5 @@ public class Neo4jUserManager {
                 return false;
             }
         }
-    }
+    } */
 }

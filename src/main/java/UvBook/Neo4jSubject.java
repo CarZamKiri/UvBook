@@ -1,10 +1,10 @@
 package UvBook;
 
 //Clase para agregar materias
-public class Neo4jSubject {
-    private final Neo4jConnection connection;
+public class Neo4jSubject { /*
+    private final Neo4jDAO connection;
 
-    public Neo4jSubject(Neo4jConnection connection) {
+    public Neo4jSubject(Neo4jDAO connection) {
         this.connection = connection;
     }
 
@@ -14,5 +14,5 @@ public class Neo4jSubject {
 
         connection.executeQuery(query); // Usamos el metodo sin parámetros
         //System.out.println("Subject created: " + subject);
-    }
+    } */
 }
