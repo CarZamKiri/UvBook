@@ -88,7 +88,39 @@ public class Neo4jDAO {
         }
         return preguntas;
     }
-    
+
+    public void crearRespuesta(String textor){
+        try(Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+                tx.run("CREATE(r:respuesta {texto: $texto, fecha: date()})", parameters("texto", textor));
+                return null;
+            });
+        }
+    }
+
+    public void relacionPreguntaRespuesta(String texto, String textor){
+        try(Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+                tx.run("MATCH (p:pregunta {texto: $texto}), (r:respuesta {texto: $texto}),  " +
+                        "CREATE (p)-[:PERTENECE]->(r)", parameters("texto", texto, "textor", textor));
+                return null;
+            });
+        }
+    }
+
+    public List<String> mostrarPreguntasRespondidas(){
+        List<String>preguntas = new ArrayList<>();
+        try(Session session = driver.session()) {
+            session.readTransaction(tx -> {
+                Result result = tx.run("MATCH n = (p:pregunta) - [a:PERTENECE] -> (r:respuesta) RETURN n");
+                while (result.hasNext()) {
+                    preguntas.add(result.next().get("texto").asString());
+                }
+                return  null;
+            });
+        }
+        return preguntas;
+    }
 
     public void close() {
         if (driver != null) {

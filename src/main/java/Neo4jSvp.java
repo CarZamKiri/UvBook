@@ -21,11 +21,14 @@ public class Neo4jSvp extends HttpServlet {
         String action = request.getParameter("action");
 
         if ("crearPregunta".equals(action)) {
+            //obtiene los parametros de la vista de estudiantes
             String texto = request.getParameter("question");
 
             if (texto != null) {
                 try {
+                    //llama a ala funcion de crear pregunta pasandole el parametro
                     neo4jDAO.crearPregunta(texto);
+                    //obtiene el correo del incio de sesion para crear la relacion
                     String correo = (String) request.getSession().getAttribute("correo");
                     neo4jDAO.relacionAlumnoPregunta(correo, texto);
                     response.getWriter().write("Pregunta creada: " + texto );
