@@ -64,6 +64,16 @@ public class Neo4jDAO {
         }
     }
 
+    public void relacionAlumnoPregunta(String correo, String texto){
+        try(Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+                tx.run("MATCH (e:estudiante {correo: $correo}), (p:pregunta {texto: $texto}) " +
+                                "CREATE (e)-[:HACE]->(p)", parameters("correo", correo, "texto", texto));
+                return null;
+            });
+        }
+    }
+
     public List<String> mostrarPreguntas(){
         List<String>preguntas = new ArrayList<>();
         try(Session session = driver.session()) {

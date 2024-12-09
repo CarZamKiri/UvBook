@@ -32,6 +32,7 @@ public class LoginServlet extends HttpServlet {
         boolean isValid = dao.validarInicioSesion(emailLogin, contraseniaLogin);
 
         if (isValid) {
+            request.getSession().setAttribute("correo", emailLogin);
             // Redirigir al dashboard en caso de éxito
             response.sendRedirect("dashboard_student.jsp");
         } else {

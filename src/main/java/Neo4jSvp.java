@@ -26,6 +26,8 @@ public class Neo4jSvp extends HttpServlet {
             if (texto != null ) {
                 try {
                     neo4jDAO.crearPregunta(texto);
+                    String correo = (String) request.getSession().getAttribute("correo");
+                    neo4jDAO.relacionAlumnoPregunta(correo, texto);
                     response.getWriter().write("Pregunta creada: " + texto );
                 } catch (IOException e) {
                     response.getWriter().write("Error");
