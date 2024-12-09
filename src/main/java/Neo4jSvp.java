@@ -23,7 +23,7 @@ public class Neo4jSvp extends HttpServlet {
         if ("crearPregunta".equals(action)) {
             String texto = request.getParameter("question");
 
-            if (texto != null ) {
+            if (texto != null) {
                 try {
                     neo4jDAO.crearPregunta(texto);
                     String correo = (String) request.getSession().getAttribute("correo");
