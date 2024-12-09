@@ -41,6 +41,9 @@
                         ¿Qué libros recomiendan para aprender Estructura de Datos?
                         <br><a href="view-question.jsp?id=2">Responder</a>
                     </li>
+                    <c:forEach var="pregunta" items="${preguntas}">
+                        <li>${pregunta}</li>
+                    </c:forEach>
                 </ul>
             </div>
         </main>

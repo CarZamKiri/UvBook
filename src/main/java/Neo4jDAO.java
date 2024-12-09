@@ -1,5 +1,9 @@
 import org.neo4j.driver.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.neo4j.driver.Values.parameters;
 
 public class Neo4jDAO {
@@ -60,6 +64,19 @@ public class Neo4jDAO {
         }
     }
 
+    public List<String> mostrarPreguntas(){
+        List<String>preguntas = new ArrayList<>();
+        try(Session session = driver.session()) {
+            session.readTransaction(tx -> {
+                Result result = tx.run("MATCH(p:pregunta) RETURN p.texto AS texto");
+                while (result.hasNext()) {
+                    preguntas.add(result.next().get("texto").asString());
+                }
+                return  null;
+            });
+        }
+        return preguntas;
+    }
     
 
     public void close() {

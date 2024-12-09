@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Neo4jSvp extends HttpServlet {
     private Neo4jDAO neo4jDAO;
@@ -35,6 +37,14 @@ public class Neo4jSvp extends HttpServlet {
             String greeting = neo4jDAO.getGreeting();
             response.getWriter().write(greeting);
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Neo4jDAO dao = new Neo4jDAO();
+        List<String> preguntas = dao.mostrarPreguntas();
+        req.setAttribute("preguntas", preguntas);
+        req.getRequestDispatcher("dashboard_student.jsp").forward(req, resp);
     }
 
     @Override
