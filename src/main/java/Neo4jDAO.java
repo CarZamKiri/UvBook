@@ -1,5 +1,5 @@
 import org.neo4j.driver.*;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static org.neo4j.driver.Values.parameters;
 
 public class Neo4jDAO {
@@ -7,9 +7,11 @@ public class Neo4jDAO {
     private static final String USER = "neo4j";
     private static final String PASSWORD = "ONBGDyFOd__VimALjNLZJ8GV7kshemkphWfVcUgsf7g";
     private Driver driver;
+    private BCryptPasswordEncoder passwordEncoder;
 
     public Neo4jDAO() {
         driver = GraphDatabase.driver(URI, AuthTokens.basic(USER, PASSWORD));
+        passwordEncoder = new BCryptPasswordEncoder();
     }
 
     public String getGreeting() {
@@ -22,23 +24,29 @@ public class Neo4jDAO {
     }
 
     public void crearEstudiante(String nombre, String ap_paterno, String ap_materno, String matricula, String correo, String contrasenia) {
+        // Encriptar la contraseña antes de guardarla
+        String hashedPassword = passwordEncoder.encode(contrasenia);
+
         try (Session session = driver.session()) {
             session.writeTransaction(tx -> {
                 tx.run("CREATE (n:estudiante {nombre: $nombre, ap_paterno: $ap_paterno, ap_materno: $ap_materno, matricula: $matricula, correo: $correo, contraseña: $contraseña})",
-                        parameters("nombre", nombre, "ap_paterno", ap_paterno, "ap_materno", ap_materno, "matricula", matricula, "correo", correo, "contraseña", contrasenia));
+                        parameters("nombre", nombre, "ap_paterno", ap_paterno, "ap_materno", ap_materno, "matricula", matricula, "correo", correo, "contraseña", hashedPassword));
                 return null;
             });
         }
     }
 
-    public boolean validarInicioSesion(String correo, String contrasenia) {
+    public boolean validarInicioSesion(String correo, String contraseniaIngresada) {
         try (Session session = driver.session()) {
             return session.readTransaction(tx -> {
-                Result result = tx.run(
-                        "MATCH (e:estudiante {correo: $correo, contraseña: $contrasenia}) RETURN e",
-                        parameters("correo", correo, "contrasenia", contrasenia)
-                );
-                return result.hasNext(); // Si hay al menos un resultado, las credenciales son válidas.
+                Result result = tx.run("MATCH (n:estudiante {correo: $correo}) RETURN n.contraseña AS contraseña",
+                        parameters("correo", correo));
+                if (result.hasNext()) {
+                    String hashedPassword = result.next().get("contraseña").asString();
+                    // Comparar la contraseña ingresada con la encriptada
+                    return passwordEncoder.matches(contraseniaIngresada, hashedPassword);
+                }
+                return false; // Usuario no encontrado
             });
         }
     }
