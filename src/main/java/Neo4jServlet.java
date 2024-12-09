@@ -31,7 +31,7 @@ public class Neo4jServlet extends HttpServlet {
             if (nombre != null && ap_paterno != null && ap_materno != null && matricula != null && email != null && contrasenia != null) {
                 try {
                     neo4jDAO.crearEstudiante(nombre, ap_paterno, ap_materno, matricula, email, contrasenia);
-                    response.getWriter().write("Alumno creado: " + nombre + " " + ap_paterno + " " + ap_materno + "matricula:" + matricula + "email:" + email + "contrasenia:" + contrasenia);
+                    response.sendRedirect("index.jsp");
                 } catch (IOException e) {
                     response.getWriter().write("Error");
                 }
