@@ -8,7 +8,7 @@
     <body>
         <header>
             <div class="profile">
-                <img src="images/teacher-avatar.png" alt="Profesor">
+                <img src="https://www.uv.mx/veracruz/nutricion/files/2021/04/Flor_con_uv_sin_fondo.png" alt="Profesor">
                 <h2>Bienvenido, Profesor</h2>
             </div>
             <nav>

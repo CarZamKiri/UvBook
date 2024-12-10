@@ -8,7 +8,7 @@
     <body>
         <header>
             <div class="profile">
-                <img src="images/admin-avatar.png" alt="Administrador">
+                <img src="https://www.uv.mx/veracruz/nutricion/files/2021/04/Flor_con_uv_sin_fondo.png" alt="Administrador">
                 <h2>Bienvenido, Administrador</h2>
             </div>
             <nav>
