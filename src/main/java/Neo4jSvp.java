@@ -31,7 +31,7 @@ public class Neo4jSvp extends HttpServlet {
                     //obtiene el correo del incio de sesion para crear la relacion
                     String correo = (String) request.getSession().getAttribute("correo");
                     neo4jDAO.relacionAlumnoPregunta(correo, texto);
-                    response.getWriter().write("Pregunta creada: " + texto );
+                    response.getWriter().write("UvBook.Pregunta creada: " + texto );
                 } catch (IOException e) {
                     response.getWriter().write("Error");
                 }

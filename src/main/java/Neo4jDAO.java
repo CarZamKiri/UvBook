@@ -1,8 +1,9 @@
+import UvBook.Pregunta;
 import org.neo4j.driver.*;
+import org.neo4j.driver.Record;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.neo4j.driver.Values.parameters;
@@ -11,8 +12,8 @@ public class Neo4jDAO {
     private static final String URI = "neo4j+s://cc5ca0ee.databases.neo4j.io";
     private static final String USER = "neo4j";
     private static final String PASSWORD = "ONBGDyFOd__VimALjNLZJ8GV7kshemkphWfVcUgsf7g";
-    private Driver driver;
-    private BCryptPasswordEncoder passwordEncoder;
+    private final Driver driver;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public Neo4jDAO() {
         driver = GraphDatabase.driver(URI, AuthTokens.basic(USER, PASSWORD));
@@ -121,6 +122,39 @@ public class Neo4jDAO {
         }
         return preguntas;
     }
+
+    public List<Pregunta> obtenerPreguntas() {
+        List<Pregunta> preguntas = new ArrayList<>();
+        try (Session session = driver.session()) {
+            session.readTransaction(tx -> {
+                Result result = tx.run("MATCH (p:pregunta) RETURN p.texto AS texto, p.fecha AS fecha, p.adjunto AS adjunto");
+
+                while (result.hasNext()) {
+                    Record record = result.next();
+                    String texto = record.get("texto").asString();
+                    String fecha;
+
+                    // Intentar convertir la fecha
+                    try {
+                        fecha = record.get("fecha").asZonedDateTime().toLocalDateTime().toString(); // Si es tipo ZonedDateTime
+                    } catch (Exception e) {
+                        fecha = record.get("fecha").asString(); // Si ya es tipo String
+                    }
+
+                    String adjunto = record.containsKey("adjunto") ? record.get("adjunto").asString() : null;
+
+                    Pregunta pregunta = new Pregunta(texto, fecha, adjunto);
+                    preguntas.add(pregunta);
+                }
+                System.out.println(preguntas);
+
+                return null;
+            });
+        }
+        return preguntas;
+    }
+
+
 
     public void close() {
         if (driver != null) {

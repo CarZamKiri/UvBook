@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
         if (isValid) {
             request.getSession().setAttribute("correo", emailLogin);
             // Redirigir al dashboard en caso de éxito
-            response.sendRedirect("dashboard_student.jsp");
+            response.sendRedirect("DashboardServlet");
         } else {
             // Volver al formulario de inicio de sesión con mensaje de error
             request.setAttribute("errorMessage", "Credenciales incorrectas.");
