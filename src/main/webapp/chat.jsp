@@ -21,7 +21,7 @@
             </nav>
         </header>
         <main class="chat-container">
-            <div class="user-list">
+            <aside class="user-list">
             <h3>Usuarios Disponibles</h3>
                 <ul>
                     <%
@@ -29,8 +29,8 @@
                         if (estudiantes != null) {
                             for (Estudiante estudiante : estudiantes) {
                     %>
+                    <li><a href="#" onclick="selectUser('<%= estudiante.getNombre() %>')"><%= estudiante.getNombre() %></a></li>
                     <li><%= estudiante.getMatricula() %></li>
-                    <li><strong><%= estudiante.getNombre() %></strong></li>
                     <%
                         }
                     } else {
@@ -41,7 +41,7 @@
                     %>
 
                 </ul>
-            </div>
+            </aside>
 
 
             <!-- Chat Principal -->
