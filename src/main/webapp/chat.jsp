@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="UvBook.Estudiante" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,26 +15,39 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="dashboard_studen.jsp">Inicio</a></li>
+                    <li><a href="DashboardServlet">Inicio</a></li>
                     <li><a href="index.jsp">Cerrar Sesión</a></li>
                 </ul>
             </nav>
         </header>
         <main class="chat-container">
-            <aside class="user-list">
-                <h3>Usuarios Conectados</h3>
+            <div class="user-list">
+            <h3>Usuarios Disponibles</h3>
                 <ul>
-                    <li><a href="#" onclick="selectUser('Juan Pérez')">Juan Pérez</a></li>
-                    <li><a href="#" onclick="selectUser('María López')">María López</a></li>
-                    <li><a href="#" onclick="selectUser('Profesor González')">Profesor González</a></li>
-                    <li><a href="#" onclick="selectUser('Ana Torres')">Ana Torres</a></li>
+                    <%
+                        List<Estudiante> estudiantes = (List<Estudiante>) request.getAttribute("estudiantes");
+                        if (estudiantes != null && !estudiantes.isEmpty()) {
+                            for (Estudiante estudiante : estudiantes) {
+                    %>
+                    <li><%= estudiante.getMatricula() %></li>
+                    <li><strong><%= estudiante.getNombre() %></strong></li>
+                    <%
+                        }
+                    } else {
+                    %>
+                    <li>No hay usuarios disponibles.</li>
+                    <%
+                        }
+                    %>
+
                 </ul>
-            </aside>
+            </div>
+
 
             <!-- Chat Principal -->
             <section class="chat-box">
                 <div id="chat-header">
-                    <h3>Chat con <span id="selected-user">[Selecciona un usuario]</span></h3>
+                    <h3>Chat con <span id="selected-user">[Selecciona un estudiante]</span></h3>
                 </div>
                 <div id="chat-messages">
                     <c:forEach var="message" items="${messages}">
@@ -62,7 +77,7 @@
             function sendMessage(event) {
                 event.preventDefault();
                 if (!selectedUser) {
-                    alert("Por favor selecciona un usuario para chatear.");
+                    alert("Por favor selecciona un estudiante para chatear.");
                     return;
                 }
 

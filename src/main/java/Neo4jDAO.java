@@ -1,4 +1,5 @@
 import UvBook.Pregunta;
+import UvBook.Estudiante;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -52,7 +53,7 @@ public class Neo4jDAO {
                     // Comparar la contraseña ingresada con la encriptada
                     return passwordEncoder.matches(contraseniaIngresada, hashedPassword);
                 }
-                return false; // Usuario no encontrado
+                return false; // Estudiante no encontrado
             });
         }
     }
@@ -154,7 +155,25 @@ public class Neo4jDAO {
         return preguntas;
     }
 
+    public List<Estudiante> obtenerEstuadiantes() {
+        List<Estudiante> estudiantes = new ArrayList<>();
+        try (Session session = driver.session()) {
+            session.readTransaction(tx -> {
+                Result result = tx.run("MATCH (e:estudiante) RETURN e.matricula AS matricula, e.nombre AS nombre");
+                while (result.hasNext()) {
+                    Record record = result.next();
+                    int matricula = record.get("matricula").asInt();
+                    String nombre = record.get("nombre").asString();
 
+                    Estudiante estudiante = new Estudiante(matricula, nombre);
+                    estudiantes.add(estudiante);
+                }
+                System.out.println(estudiantes);
+                return null;
+            });
+        }
+        return estudiantes;
+    }
 
     public void close() {
         if (driver != null) {

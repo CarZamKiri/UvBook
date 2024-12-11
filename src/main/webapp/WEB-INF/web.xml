@@ -38,6 +38,13 @@
     <url-pattern>/DashboardServlet</url-pattern>
   </servlet-mapping>
 
-
+  <servlet>
+    <servlet-name>ChatServletUsers</servlet-name>
+    <servlet-class>ChatServletUsers</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChatServletUsers</servlet-name>
+    <url-pattern>/ChatServletUsers</url-pattern>
+  </servlet-mapping>
 
 </web-app>
