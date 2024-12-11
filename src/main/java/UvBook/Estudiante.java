@@ -1,19 +1,19 @@
 package UvBook;
 
 public class Estudiante {
-    private int matricula;
+    private String matricula;
     private String nombre;
 
-    public Estudiante(int id, String nombre) {
+    public Estudiante(String id, String nombre) {
         this.matricula = id;
         this.nombre = nombre;
     }
 
-    public int getMatricula() {
+    public String getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(int matricula) {
+    public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
 

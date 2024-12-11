@@ -1,6 +1,5 @@
 import UvBook.Estudiante;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +17,7 @@ public class ChatServletUsers extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Estudiante> estudiantes = neo4jDAO.obtenerEstuadiantes(); // Obtén la lista de estudiantes desde la base de datos
+        List<Estudiante> estudiantes = neo4jDAO.obtenerEstudiantes(); // Obtén la lista de estudiantes desde la base de datos
         request.setAttribute("estudiantes", estudiantes); // Asigna la lista como atributo para el JSP
         request.getRequestDispatcher("chat.jsp").forward(request, response); // Redirige al JSP
     }

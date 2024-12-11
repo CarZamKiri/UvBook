@@ -155,14 +155,14 @@ public class Neo4jDAO {
         return preguntas;
     }
 
-    public List<Estudiante> obtenerEstuadiantes() {
+    public List<Estudiante> obtenerEstudiantes() {
         List<Estudiante> estudiantes = new ArrayList<>();
         try (Session session = driver.session()) {
             session.readTransaction(tx -> {
                 Result result = tx.run("MATCH (e:estudiante) RETURN e.matricula AS matricula, e.nombre AS nombre");
                 while (result.hasNext()) {
                     Record record = result.next();
-                    int matricula = record.get("matricula").asInt();
+                    String matricula = record.get("matricula").asString();
                     String nombre = record.get("nombre").asString();
 
                     Estudiante estudiante = new Estudiante(matricula, nombre);

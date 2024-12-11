@@ -26,7 +26,7 @@
                 <ul>
                     <%
                         List<Estudiante> estudiantes = (List<Estudiante>) request.getAttribute("estudiantes");
-                        if (estudiantes != null && !estudiantes.isEmpty()) {
+                        if (estudiantes != null) {
                             for (Estudiante estudiante : estudiantes) {
                     %>
                     <li><%= estudiante.getMatricula() %></li>
