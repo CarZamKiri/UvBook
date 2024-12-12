@@ -1,33 +1,20 @@
 package UvBookRMI;
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
+import java.rmi.Naming;
+import java.rmi.registry.LocateRegistry;
 
-public class ChatServer extends UnicastRemoteObject implements ChatServerInterface {
-    private final List<String> messages;
-    protected ChatServer() throws RemoteException {
-        messages = new ArrayList<>();
-    }
-
-    @Override
-    public synchronized void sendMessage(String username, String message) throws RemoteException {
-        messages.add(username + ": " + message);
-    }
-
-    @Override
-    public synchronized List<String> getMessages() throws RemoteException {
-        return new ArrayList<>(messages);
-    }
-
+public class ChatServer {
     public static void main(String[] args) {
         try {
-            java.rmi.registry.LocateRegistry.createRegistry(1099);
-            ChatServerInterface chatServer = new ChatServer();
-            java.rmi.Naming.rebind("rmi://localhost/ChatServer", chatServer);
-            System.out.println("Servidor RMI del chat iniciado...");
+            // Inicia el registro RMI en el puerto 1099
+            LocateRegistry.createRegistry(1099);
+
+            ImplemChatConfi config = new ImplemChatConfi();
+            Naming.rebind("//localhost/ChatConfi", config);
+
+            System.out.println("Servidor RMI listo.");
         } catch (Exception e) {
+            System.err.println("Error al iniciar el servidor RMI: " + e.getMessage());
             e.printStackTrace();
         }
     }

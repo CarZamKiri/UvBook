@@ -3,98 +3,75 @@
 <%@ page import="UvBook.Estudiante" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Chat - UVBook</title>
-        <link rel="stylesheet" href="css/chat.css">
-    </head>
-    <body>
-        <header>
-            <div class="profile">
-                <img src="images/chat-avatar.png" alt="Chat">
-                <h2>Bienvenido al Chat</h2>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="DashboardServlet">Inicio</a></li>
-                    <li><a href="index.jsp">Cerrar Sesión</a></li>
-                </ul>
-            </nav>
-        </header>
-        <main class="chat-container">
-            <aside class="user-list">
-            <h3>Usuarios Disponibles</h3>
-                <ul>
-                    <%
-                        List<Estudiante> estudiantes = (List<Estudiante>) request.getAttribute("estudiantes");
-                        if (estudiantes != null) {
-                            for (Estudiante estudiante : estudiantes) {
-                    %>
-                    <li><a href="#" onclick="selectUser('<%= estudiante.getNombre() %>')"><%= estudiante.getNombre() %></a></li>
-                    <li><%= estudiante.getMatricula() %></li>
-                    <%
-                        }
-                    } else {
-                    %>
-                    <li>No hay usuarios disponibles.</li>
-                    <%
-                        }
-                    %>
-
-                </ul>
-            </aside>
-
-
-            <!-- Chat Principal -->
-            <section class="chat-box">
-                <div id="chat-header">
-                    <h3>Chat con <span id="selected-user">[Selecciona un estudiante]</span></h3>
-                </div>
-                <div id="chat-messages">
-                    <c:forEach var="message" items="${messages}">
-                        <div>${message}</div>
-                    </c:forEach>
-                </div>
-                <form id="chat-form" action="chat" method="post">
-                    <input type="hidden" name="username" value="${sessionScope.username}">
-                    <input type="text" name="message" placeholder="Escribe tu mensaje..." required>
-                    <button type="submit">Enviar</button>
-                </form>
-            </section>
-        </main>
-        <footer>
-            <p>UVBook - Red Social Académica</p>
-        </footer>
-
-        <script>
-            let selectedUser = null;
-
-            function selectUser(user) {
-                selectedUser = user;
-                document.getElementById("selected-user").innerText = user;
-                document.getElementById("chat-messages").innerHTML = "";
+<head>
+    <title>Chat - UVBook</title>
+    <link rel="stylesheet" href="css/chat.css">
+    <script>
+        let socket;
+        function initSocket() {
+            socket = new WebSocket("ws://localhost:8080/chatEndpoint");
+            socket.onmessage = (event) => {
+                const chatWindow = document.getElementById("chat-messages");
+                chatWindow.innerHTML += `<div>${event.data}</div>`;
+            };
+            socket.onclose = () => {
+                console.log("Conexión cerrada.");
+            };
+        }
+        function sendMessage() {
+            const message = document.getElementById("messageInput").value;
+            const userName = document.getElementById("userName").value;
+            if (message.trim() !== "") {
+                socket.send(userName + ": " + message);
+                document.getElementById("messageInput").value = "";
             }
+        }
+    </script>
 
-            function sendMessage(event) {
-                event.preventDefault();
-                if (!selectedUser) {
-                    alert("Por favor selecciona un estudiante para chatear.");
-                    return;
+</head>
+<body onload="initSocket()">
+<header>
+    <div class="profile">
+        <img src="images/chat-avatar.png" alt="Chat">
+        <h2>Bienvenido al Chat</h2>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="DashboardServlet">Inicio</a></li>
+            <li><a href="index.jsp">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+</header>
+<main class="chat-container">
+    <aside class="user-list">
+        <h3>Usuarios Disponibles</h3>
+        <ul>
+            <%
+                List<Estudiante> estudiantes = (List<Estudiante>) request.getAttribute("estudiantes");
+                if (estudiantes != null) {
+                    for (Estudiante estudiante : estudiantes) {
+            %>
+            <li><a href="#" onclick="selectUser('<%= estudiante.getNombre() %>')"><%= estudiante.getNombre() %></a></li>
+            <%
                 }
-
-                const input = document.getElementById("chat-input");
-                const message = input.value.trim();
-
-                if (message !== "") {
-                    const chatMessages = document.getElementById("chat-messages");
-                    const newMessage = document.createElement("div");
-                    newMessage.className = "sent-message";
-                    newMessage.innerText = `Tú: ${message}`;
-                    chatMessages.appendChild(newMessage);
-                    chatMessages.scrollTop = chatMessages.scrollHeight; // Baja al final
-
-                    input.value = "";
+            } else {
+            %>
+            <li>No hay usuarios disponibles.</li>
+            <%
                 }
-            }
-        </script>
-    </body>
+            %>
+        </ul>
+    </aside>
+    <section class="chat-section">
+        <div id="chat-messages" class="messages"></div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Escribe tu mensaje aquí..." />
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>UVBook - Red Social Académica</p>
+</footer>
+</body>
 </html>

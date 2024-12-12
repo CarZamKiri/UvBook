@@ -1,4 +1,6 @@
 import UvBook.Estudiante;
+import UvBook.Pregunta;
+
 import java.util.List;
 
 public class Neo4jMainTest {
@@ -9,14 +11,14 @@ public class Neo4jMainTest {
             System.out.println("Conectando a Neo4j...");
 
             // Probar obtener estudiantes
-            List<Estudiante> estudiantes = neo4jDAO.obtenerEstudiantes();
+            List<Pregunta> estudiantes = neo4jDAO.obtenerPreguntas();
 
             if (estudiantes.isEmpty()) {
                 System.out.println("No se encontraron estudiantes en la base de datos.");
             } else {
                 System.out.println("Estudiantes encontrados:");
-                for (Estudiante estudiante : estudiantes) {
-                    System.out.println("Matrícula: " + estudiante.getMatricula() + ", Nombre: " + estudiante.getNombre());
+                for (Pregunta estudiante : estudiantes) {
+                    System.out.println("Matrícula: " + estudiante.getFecha() + ", Nombre: " + estudiante.getTexto());
                 }
             }
         } catch (Exception e) {
