@@ -47,4 +47,13 @@
     <url-pattern>/ChatServletUsers</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>teacherServlet</servlet-name>
+    <servlet-class>TeacherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>teacherServlet</servlet-name>
+    <url-pattern>/TeacherdServlet</url-pattern>
+  </servlet-mapping>
+
 </web-app>

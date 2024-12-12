@@ -17,7 +17,7 @@
     <nav>
         <ul>
             <li><a href="DashboardServlet">Inicio</a></li>
-            <li><a href="dashboard_student.jsp">Inicio</a></li>
+            <li><a href="TeacherdServlet">Inicio</a></li>
             <li><a href="ChatServletUsers">Chat</a></li>
             <li><a href="index.jsp">Cerrar Sesión</a></li>
         </ul>

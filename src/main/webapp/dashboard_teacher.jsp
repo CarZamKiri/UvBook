@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="UvBook.Respuestas" %>
+<%@ page import="UvBook.Pregunta" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +16,7 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="dashboard_teacher.jsp">Inicio</a></li>
+                    <li><a href="DashboardServlet">Inicio</a></li>
                     <li><a href="chat.jsp">Chat</a></li>
                     <li><a href="index.jsp">Cerrar Sesión</a></li>
                 </ul>
@@ -38,12 +41,33 @@
             <div class="questions-list">
                 <h3>Preguntas Resueltas</h3>
                 <ul>
+                    <%
+                        List<Respuestas> respuestas = (List<Respuestas>) request.getAttribute("preguntasr");
+                        if (respuestas != null) {
+                            for (Respuestas respuesta : respuestas) {
+                                Pregunta preguntarelacionada = respuesta.getPregunta().isEmpty() ? null: respuesta.getPregunta().get(0);
+                    %>
                     <li>
-                        <strong>Alberto Caballero</strong>
-                        ¿Cómo crear un archivo WAR?
-                        <br><span>Respuesta enviada</span>
+                        <% if (preguntarelacionada != null) { %>
+                        <strong>Pregunta: <br><%= preguntarelacionada.getTexto() %></strong>
+                        <%= preguntarelacionada.getFecha() %>
+                        <% if (preguntarelacionada.getAdjunto() != null && !preguntarelacionada.getAdjunto().isEmpty()) { %>
+                        <br><a href="<%= preguntarelacionada.getAdjunto() %>" target="_blank">Ver Adjunto</a><br>
+                            <% } %>
+                        <% } %>
+                        <strong><br>Respuesta: <br><%= respuesta.getTexto() %></strong>
+                        <%= respuesta.getFecha() %>
+                        <% if (respuesta.getAdjunto() != null && !respuesta.getAdjunto().isEmpty()) { %>
+                        <br><a href="<%= respuesta.getAdjunto() %>" target="_blank">Ver Adjunto</a>
+                        <% } %>
                     </li>
+                    <%
+                            }
+                        }
+                    %>
                 </ul>
+            </div>
+
             </div>
         </main>
         <footer>

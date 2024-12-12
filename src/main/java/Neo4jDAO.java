@@ -1,5 +1,6 @@
 import UvBook.Pregunta;
 import UvBook.Estudiante;
+import UvBook.Respuestas;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -110,18 +111,42 @@ public class Neo4jDAO {
         }
     }
 
-    public List<String> mostrarPreguntasRespondidas(){
-        List<String>preguntas = new ArrayList<>();
+    public List<Respuestas> ObtenerPreguntasRespondidas(){
+        List<Respuestas> preguntasr = new ArrayList<>();
         try(Session session = driver.session()) {
             session.readTransaction(tx -> {
-                Result result = tx.run("MATCH n = (p:pregunta) - [a:PERTENECE] -> (r:respuesta) RETURN n");
+                Result result = tx.run("MATCH n = (p:pregunta) - [a:PERTENECE] -> (r:respuesta) RETURN p.texto AS Pregunta, " +
+                        " p.adjunto As Adjunto, r.texto AS Respuesta, r.adjunto AS Adjuntor, r.fecha AS Fecha");
+
                 while (result.hasNext()) {
-                    preguntas.add(result.next().get("texto").asString());
+                    Record record = result.next();
+                    String pregunta = record.get("Pregunta").asString();
+                    String respuesta = record.get("Respuesta").asString();
+                    String fecha;
+
+                    try {
+                        fecha = record.get("Fecha").asZonedDateTime().toLocalDateTime().toString();
+                    } catch (Exception e) {
+                        fecha = record.get("Fecha").asString();
+                    }
+
+                    String adjuntor = record.containsKey("adjuntor") ? record.get("adjuntor").asString() : null;
+                    Respuestas muestra = new Respuestas(respuesta ,fecha, adjuntor);
+
+                    String adjunto = record.containsKey("adjunto") ? record.get("adjunto").asString() : null;
+                    Pregunta preguntaobtenida = new Pregunta(pregunta, fecha, adjunto);
+
+                    preguntaobtenida.setAdjunto(adjunto);
+
+                    muestra.agregarPregunta(preguntaobtenida);
+                    preguntasr.add(muestra);
                 }
+                System.out.println(preguntasr);
+
                 return  null;
             });
         }
-        return preguntas;
+        return preguntasr;
     }
 
     public List<Pregunta> obtenerPreguntas() {
