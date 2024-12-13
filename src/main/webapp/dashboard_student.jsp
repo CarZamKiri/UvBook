@@ -46,6 +46,14 @@
                 <% if (pregunta.getAdjunto() != null && !pregunta.getAdjunto().isEmpty()) { %>
                 <br><a href="<%= pregunta.getAdjunto() %>" target="_blank">Ver Adjunto</a>
                 <% } %>
+                <div class="post-question">
+                    <form action="DashboardServlet" method="post">
+                        <textarea name="answer" placeholder="Escribe tu respuesta..." maxlength="250" required></textarea>
+                        <input type="hidden" name="action" value="crearRespuesta">
+                        <input type="hidden" name="pregunta" value="<%= pregunta.getTexto() %>">
+                        <button type="submit">Publicar</button>
+                    </form>
+                </div>
             </li>
             <%
                     }

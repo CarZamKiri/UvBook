@@ -5,6 +5,8 @@ import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,8 @@ public class Neo4jDAO {
     public void crearPregunta(String texto){
         try(Session session = driver.session()) {
             session.writeTransaction(tx -> {
-                tx.run("CREATE(p:pregunta{texto: $texto, fecha: date()})", parameters("texto", texto));
+                String fechaactual = LocalDateTime.now().toString();
+                tx.run("CREATE(p:pregunta{texto: $texto, fecha: $fecha})", parameters("texto", texto, "fecha", fechaactual));
                 return null;
             });
         }
@@ -77,6 +80,7 @@ public class Neo4jDAO {
             });
         }
     }
+
 
     public List<String> mostrarPreguntas(){
         List<String>preguntas = new ArrayList<>();
@@ -95,17 +99,31 @@ public class Neo4jDAO {
     public void crearRespuesta(String textor){
         try(Session session = driver.session()) {
             session.writeTransaction(tx -> {
-                tx.run("CREATE(r:respuesta {texto: $texto, fecha: date()})", parameters("texto", textor));
+                String fechaactual = LocalDateTime.now().toString();
+                tx.run("CREATE(r:respuesta {texto: $texto, fecha: $fecha})", parameters("texto", textor, "fecha", fechaactual));
                 return null;
             });
         }
     }
 
-    public void relacionPreguntaRespuesta(String texto, String textor){
+
+    public void relacionAlumnoRespuesta(String correo, String texto){
         try(Session session = driver.session()) {
             session.writeTransaction(tx -> {
-                tx.run("MATCH (p:pregunta {texto: $texto}), (r:respuesta {texto: $texto}),  " +
-                        "CREATE (p)-[:PERTENECE]->(r)", parameters("texto", texto, "textor", textor));
+                tx.run("MATCH (e:estudiante {correo: $correo}), (r:respuesta {texto: $texto}) " +
+                        "CREATE (e)-[:RESPONDE]->(r)", parameters("correo", correo, "texto", texto));
+                return null;
+            });
+        }
+    }
+
+
+
+    public void relacionPreguntaRespuesta(String texto, String pregunta){
+        try(Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+                tx.run("MATCH (r:respuesta {texto: $texto}), (p:pregunta {texto: $pregunta}) " +
+                        "CREATE (r)-[:PERTENECE]->(p)", parameters("texto", texto, "pregunta", pregunta));
                 return null;
             });
         }
@@ -171,6 +189,7 @@ public class Neo4jDAO {
 
                     Pregunta pregunta = new Pregunta(texto, fecha, adjunto);
                     preguntas.add(pregunta);
+
                 }
                 System.out.println(preguntas);
 
