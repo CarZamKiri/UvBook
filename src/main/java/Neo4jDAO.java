@@ -1,3 +1,4 @@
+import UvBook.Materia;
 import UvBook.Pregunta;
 import UvBook.Estudiante;
 import UvBook.Respuestas;
@@ -217,6 +218,24 @@ public class Neo4jDAO {
             });
         }
         return estudiantes;
+    }
+
+    public List<Materia> obtenerMaterias() {
+        List<Materia> materias = new ArrayList<>();
+        try (Session session = driver.session()) {
+            session.readTransaction(tx -> {
+                Result result = tx.run("MATCH (m:materia) return m.nombre AS materia");
+                while (result.hasNext()){
+                    Record record = result.next();
+                    String nombre = record.get("nombre").asString();
+                    Materia materia = new Materia(nombre);
+                    materias.add(materia);
+                }
+                System.out.println(materias);
+                return null;
+            });
+        }
+        return materias;
     }
 
     public void close() {
