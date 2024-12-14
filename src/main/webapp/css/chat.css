@@ -17,9 +17,21 @@ header {
     padding: 10px 20px;
 }
 
+header .profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+header .profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
 header .profile h2 {
     margin: 0;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 nav ul {
@@ -28,13 +40,10 @@ nav ul {
     gap: 15px;
 }
 
-nav ul li {
-    display: inline;
-}
-
 nav ul li a {
     color: white;
     text-decoration: none;
+    font-size: 16px;
 }
 
 .chat-container {
@@ -45,24 +54,22 @@ nav ul li a {
 }
 
 .user-list {
-    width: 25%;
+    width: 30%;
     background-color: #f7f9fc;
     border-right: 1px solid #ddd;
-    padding: 15px;
+    padding: 20px;
     overflow-y: auto;
 }
 
 .user-list h3 {
-    margin-bottom: 15px;
-}
-
-.user-list ul {
-    list-style: none;
-    padding: 0;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #2da0a8;
 }
 
 .user-list ul li {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
 }
 
 .user-list ul li a {
@@ -70,62 +77,47 @@ nav ul li a {
     text-decoration: none;
 }
 
-.user-list ul li a:hover {
-    text-decoration: underline;
-}
-
-.chat-box {
+.chat-area {
     flex: 1;
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    padding: 15px;
-}
-
-#chat-header {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    padding: 20px;
 }
 
 #chat-messages {
     flex: 1;
     overflow-y: auto;
-    margin-bottom: 10px;
-    padding: 5px;
+    margin-bottom: 15px;
+    padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: #f9f9f9;
 }
 
-.sent-message {
-    margin: 5px 0;
-    text-align: right;
-    color: #2da0a8;
-    font-weight: bold;
-}
-
-#chat-form {
+.chat-input {
     display: flex;
     gap: 10px;
 }
 
-#chat-input {
+#messageInput {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 14px;
 }
 
-#chat-form button {
+.chat-input button {
     background-color: #2da0a8;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 12px 20px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 14px;
 }
 
-#chat-form button:hover {
+.chat-input button:hover {
     background-color: #22868a;
 }

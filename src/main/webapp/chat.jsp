@@ -5,29 +5,7 @@
 <html>
 <head>
     <title>Chat - UVBook</title>
-    <link rel="stylesheet" href="css/chat.css">
-    <script>
-        let socket;
-        function initSocket() {
-            socket = new WebSocket("ws://localhost:8080/chatEndpoint");
-            socket.onmessage = (event) => {
-                const chatWindow = document.getElementById("chat-messages");
-                chatWindow.innerHTML += `<div>${event.data}</div>`;
-            };
-            socket.onclose = () => {
-                console.log("Conexión cerrada.");
-            };
-        }
-        function sendMessage() {
-            const message = document.getElementById("messageInput").value;
-            const userName = document.getElementById("userName").value;
-            if (message.trim() !== "") {
-                socket.send(userName + ": " + message);
-                document.getElementById("messageInput").value = "";
-            }
-        }
-    </script>
-
+    <link rel="stylesheet" type="text/css" href="css/chat.css">
 </head>
 <body onload="initSocket()">
 <header>
@@ -57,21 +35,79 @@
             } else {
             %>
             <li>No hay usuarios disponibles.</li>
-            <%
-                }
-            %>
+            <% } %>
         </ul>
     </aside>
-    <section class="chat-section">
-        <div id="chat-messages" class="messages"></div>
-        <div class="chat-input">
-            <input type="text" id="messageInput" placeholder="Escribe tu mensaje aquí..." />
-            <button onclick="sendMessage()">Enviar</button>
+    <section class="chat-area">
+        <div id="chat-header">
+            <h3>Chat con <span id="selected-user">[Selecciona un estudiante]</span></h3>
         </div>
+        <div id="chat-messages"></div>
+        <form id="chat-form" onsubmit="sendMessage(event)">
+            <input type="hidden" id="username" value="<%= request.getSession().getAttribute("correo") %>">
+            <input type="text" id="message-input" placeholder="Escribe tu mensaje..." required>
+            <button type="submit">Enviar</button>
+        </form>
     </section>
 </main>
 <footer>
     <p>UVBook - Red Social Académica</p>
 </footer>
+
+<script>
+    let websocket;
+    let selectedUser = null;
+
+    function initSocket() {
+        websocket = new WebSocket(`ws://localhost:8080/chatEndpoint?user=${encodeURIComponent(username)}`);
+
+        websocket.onopen = () => {
+            console.log("Conectado al servidor WebSocket");
+        };
+
+        websocket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const chatMessages = document.getElementById("chat-messages");
+            const newMessage = document.createElement("div");
+            newMessage.className = data.sender === document.getElementById("username").value ? "sent-message" : "received-message";
+            newMessage.innerText = `${data.sender}: ${data.message}`;
+            chatMessages.appendChild(newMessage);
+        };
+
+        websocket.onclose = () => {
+            console.log("Conexión WebSocket cerrada");
+        };
+    }
+
+    function selectUser(user) {
+        selectedUser = user;
+        document.getElementById("selected-user").innerText = user;
+        document.getElementById("chat-messages").innerHTML = "";
+    }
+
+    async function sendMessage(event) {
+        event.preventDefault();
+        if (!selectedUser) {
+            alert("Por favor selecciona un estudiante para chatear.");
+            return;
+        }
+
+        const username = document.getElementById("username").value;
+        const message = document.getElementById("message-input").value.trim();
+
+        if (message !== "") {
+            const formattedMessage = JSON.stringify({ sender: username, receiver: selectedUser, message });
+            websocket.send(formattedMessage);
+
+            const chatMessages = document.getElementById("chat-messages");
+            const newMessage = document.createElement("div");
+            newMessage.className = "sent-message";
+            newMessage.innerText = `Tú: ${message}`;
+            chatMessages.appendChild(newMessage);
+
+            document.getElementById("message-input").value = "";
+        }
+    }
+</script>
 </body>
 </html>
