@@ -82,7 +82,6 @@ public class Neo4jDAO {
         }
     }
 
-
     public List<String> mostrarPreguntas(){
         List<String>preguntas = new ArrayList<>();
         try(Session session = driver.session()) {
@@ -120,11 +119,11 @@ public class Neo4jDAO {
 
 
 
-    public void relacionPreguntaRespuesta(String texto, String pregunta){
+    public void relacionPreguntaRespuesta(String pregunta, String texto){
         try(Session session = driver.session()) {
             session.writeTransaction(tx -> {
-                tx.run("MATCH (r:respuesta {texto: $texto}), (p:pregunta {texto: $pregunta}) " +
-                        "CREATE (r)-[:PERTENECE]->(p)", parameters("texto", texto, "pregunta", pregunta));
+                tx.run("MATCH (p:pregunta {texto: $pregunta}), (r:respuesta {texto: $texto})  " +
+                        "CREATE (p)-[:PERTENECE]->(r)", parameters("pregunta", pregunta, "texto", texto ));
                 return null;
             });
         }
@@ -168,6 +167,38 @@ public class Neo4jDAO {
         return preguntasr;
     }
 
+
+    public List<Pregunta> obtenerPreguntasnr() {
+        List<Pregunta> preguntasnr = new ArrayList<>();
+        try (Session session = driver.session()) {
+            session.readTransaction(tx -> {
+                Result result = tx.run("MATCH (p:pregunta) where not (p)-[:PERTENECE]->() RETURN p.texto AS pergunta, p.fecha AS Fecha, p.adjunto AS adjunto");
+
+                while (result.hasNext()) {
+                    Record record = result.next();
+                    String pregunta = record.get("pregunta").asString();
+                    String fecha;
+
+                    // Intentar convertir la fecha
+                    try {
+                        fecha = record.get("Fecha").asZonedDateTime().toLocalDateTime().toString(); // Si es tipo ZonedDateTime
+                    } catch (Exception e) {
+                        fecha = record.get("Fecha").asString(); // Si ya es tipo String
+                    }
+
+                    String adjunto = record.containsKey("adjunto") ? record.get("adjunto").asString() : null;
+
+                    Pregunta preguntanr = new Pregunta(pregunta, fecha, adjunto);
+                    preguntasnr.add(preguntanr);
+
+                }
+                System.out.println(preguntasnr);
+
+                return null;
+            });
+        }
+        return preguntasnr;
+    }
     public List<Pregunta> obtenerPreguntas() {
         List<Pregunta> preguntas = new ArrayList<>();
         try (Session session = driver.session()) {

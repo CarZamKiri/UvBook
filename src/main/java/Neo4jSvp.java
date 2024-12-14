@@ -1,3 +1,5 @@
+import UvBook.Pregunta;
+import UvBook.Respuestas;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,11 +47,10 @@ public class Neo4jSvp extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Neo4jDAO dao = new Neo4jDAO();
-        List<String> preguntas = dao.mostrarPreguntas();
-        req.setAttribute("preguntas", preguntas);
-        req.getRequestDispatcher("dashboard_student.jsp").forward(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Pregunta> preguntas = neo4jDAO.obtenerPreguntasnr(); // Obtener preguntas desde la base de datos
+        request.setAttribute("preguntanr", preguntas); // Pasar la lista al JSP
+        request.getRequestDispatcher("dashboard_teacher.jsp").forward(request, response); // Redirigir al JSP
     }
 
     @Override

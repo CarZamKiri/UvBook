@@ -38,7 +38,7 @@ public class DashboardServlet extends HttpServlet {
                     //llama a las funciones correspondientes para hacer los create de nodos y relaciones
                     neo4jDAO.crearRespuesta(texto);
                     neo4jDAO.relacionAlumnoRespuesta(correo, texto);
-                    neo4jDAO.relacionPreguntaRespuesta(texto, pregunta);
+                    neo4jDAO.relacionPreguntaRespuesta(pregunta, texto);
 
                     response.getWriter().write("UvBook.Respuesta creada: " + texto );
                 } catch (IOException e) {

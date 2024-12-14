@@ -26,16 +26,22 @@
             <div class="questions-list">
                 <h3>Preguntas Pendientes</h3>
                 <ul>
+                    <%
+                        List<Pregunta> preguntas = (List<Pregunta>) request.getAttribute("preguntanr");
+                        if (preguntas != null) {
+                            for (Pregunta pregunta : preguntas) {
+                    %>
                     <li>
-                        <strong>Juan Pérez</strong>
-                        ¿Alguien puede explicarme el concepto de herencia en Java?
-                        <br><a href="answer-question.jsp?id=1">Responder</a>
+                        <strong><%= pregunta.getTexto() %></strong>
+                        <br>Fecha: <%= pregunta.getFecha() %>
+                        <% if (pregunta.getAdjunto() != null && !pregunta.getAdjunto().isEmpty()) { %>
+                        <br><a href="<%= pregunta.getAdjunto() %>" target="_blank">Ver Adjunto</a>
+                        <% } %>
                     </li>
-                    <li>
-                        <strong>María López</strong>
-                        ¿Qué libros recomiendan para aprender Estructura de Datos?
-                        <br><a href="answer-question.jsp?id=2">Responder</a>
-                    </li>
+                    <%
+                            }
+                        }
+                    %>
                 </ul>
             </div>
             <div class="questions-list">
