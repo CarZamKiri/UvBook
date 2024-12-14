@@ -28,7 +28,7 @@
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required><br><br>
 
-            <label for="contrasenia">Contraseña:</label>
+            <label for="contrasenia">Contraseï¿½a:</label>
             <input type="password" id="contrasenia" name="contrasenia" required><br><br>
 
             <input type="hidden" name="action" value="crearEstudiante">
@@ -37,20 +37,20 @@
     </div>
     <div class="form-container sign-in">
         <form action="LoginServlet" method="post">
-            <h1>Inicia Sesión</h1>
+            <h1>Inicia SesiÃ³n</h1>
             <span>UvBook</span>
             <label for="emailLogin">Correo:</label>
             <input type="email" id="emailLogin" name="emailLogin" required /><br>
-            <label for="contraseniaLogin">Contraseña:</label>
+            <label for="contraseniaLogin">Contraseï¿½a:</label>
             <input type="password" id="contraseniaLogin" name="contraseniaLogin" required /><br>
-            <button type="submit">Iniciar Sesión</button>
+            <button type="submit">Iniciar Sesiï¿½n</button>
         </form>
 
     </div>
     <div class="toggle-container">
         <div class="toggle">
             <div class="toggle-panel toggle-left">
-                <h1>¿Ya tienes una cuenta?</h1>
+                <h1>ï¿½Ya tienes una cuenta?</h1>
                 <p>Inicia sesion y empieza a navegar</p>
                 <button class="hidden" id="login">Iniciar sesion</button>
             </div>

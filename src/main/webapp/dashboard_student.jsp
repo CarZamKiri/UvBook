@@ -12,7 +12,12 @@
 <header>
     <div class="profile">
         <img src="https://www.uv.mx/veracruz/nutricion/files/2021/04/Flor_con_uv_sin_fondo.png" alt="Alumno">
-        <h2>Bienvenido, Alumno</h2>
+        <div class="menu">
+            <%
+                String correo = (String) request.getSession().getAttribute("correo");
+            %>
+        </div>
+        <h2>Bienvenido, <%= correo%></h2>
     </div>
     <nav>
         <ul>
