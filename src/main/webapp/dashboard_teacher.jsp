@@ -26,22 +26,9 @@
             <div class="questions-list">
                 <h3>Preguntas Pendientes</h3>
                 <ul>
-                    <%
-                        List<Pregunta> preguntas = (List<Pregunta>) request.getAttribute("preguntanr");
-                        if (preguntas != null) {
-                            for (Pregunta pregunta : preguntas) {
-                    %>
                     <li>
-                        <strong><%= pregunta.getTexto() %></strong>
-                        <br>Fecha: <%= pregunta.getFecha() %>
-                        <% if (pregunta.getAdjunto() != null && !pregunta.getAdjunto().isEmpty()) { %>
-                        <br><a href="<%= pregunta.getAdjunto() %>" target="_blank">Ver Adjunto</a>
-                        <% } %>
+                        No hay preguntas para mostrar
                     </li>
-                    <%
-                            }
-                        }
-                    %>
                 </ul>
             </div>
             <div class="questions-list">
