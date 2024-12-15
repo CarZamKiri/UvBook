@@ -310,6 +310,15 @@ public class Neo4jDAO {
         }
     }
 
+    public void eliminarUsuario(String correo) {
+        try (Session session = driver.session()) {
+            String query = "MATCH (u:Usuario {correo: $correo}) DETACH DELETE u";
+            session.run(query, Values.parameters("correo", correo));
+        } catch (Exception e) {
+            throw new RuntimeException("Error al eliminar el usuario", e);
+        }
+    }
+
     public void close() {
         if (driver != null) {
             driver.close();

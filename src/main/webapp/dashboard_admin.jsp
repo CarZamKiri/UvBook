@@ -17,7 +17,7 @@
     </div>
     <nav>
         <ul>
-            <li><a href="usuarios.jsp">Usuarios</a></li>
+            <li><a href="ChatServletUsers">Usuarios</a></li>
             <li><a href="index.jsp">Cerrar Sesión</a></li>
         </ul>
     </nav>
