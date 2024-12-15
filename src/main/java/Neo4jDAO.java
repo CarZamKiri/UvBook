@@ -1,7 +1,4 @@
-import UvBook.Materia;
-import UvBook.Pregunta;
-import UvBook.Estudiante;
-import UvBook.Respuestas;
+import UvBook.*;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -280,12 +277,27 @@ public class Neo4jDAO {
             e.printStackTrace();
         }
     }
-/*
-    public void obtenerperfil{
 
+    public Perfil obtenerperfil(String correo){
+        try (Session session = driver.session()) {
+            return session.readTransaction(tx -> {
+                Result result = tx.run("MATCH (e:estudiante {correo: $correo}) RETURN e.nombre AS nombre, e.ap_paterno AS apellidop," +
+                        "e.ap_materno AS apellidom, e.matricula AS matricula, e.correo AS correo", parameters("correo", correo));
+                if (result.hasNext()) {
+                    Record record = result.next();
+                    String nombre = record.get("nombre").asString();
+                    String apellidop = record.get("ap_paterno").asString();
+                    String apellidom = record.get("ap_materno").asString();
+                    String matricula = record.get("matricula").asString();
+
+                    return new Perfil(nombre, apellidop, apellidom, matricula, correo);
+                }
+                return null;
+            });
+        }
     }
-
-    public void modificarperfil{
+/*
+    public void modificarperfil()
 
     }
 */

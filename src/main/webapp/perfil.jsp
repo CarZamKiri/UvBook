@@ -1,4 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="UvBook.Perfil" %>
+
 <!Doctype html>
 <html>
   <head>
@@ -27,42 +29,42 @@
     </nav>
   </header>
   <main>
-      <div class="campo-post">
-        <form class="perfil">
-          <h1>Perfil</h1>
-          <div class="campo">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-          </div>
+    <div class="campo-post">
+      <form class="perfil">
+        <h1>Perfil</h1>
+        <%
+          Perfil perfil = (Perfil) request.getAttribute("perfil");
+          if (perfil != null) {
+        %>
+        <div class="campo">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" value="<%= perfil.getNombre() %>" required>
+        </div>
 
-          <div class="campo">
-            <label for="apellidop">Apellido paterno:</label>
-            <input type="text" id="apellidop" name="apellidop" required>
-          </div>
+        <div class="campo">
+          <label for="apellidop">Apellido paterno:</label>
+          <input type="text" id="apellidop" name="apellidop" value="<%= perfil.getApellidop() %>" required>
+        </div>
 
-          <div class="campo">
-            <label for="apellidom">Apellido materno:</label>
-            <input type="text" id="apellidom" name="apellidom" required>
-          </div>
+        <div class="campo">
+          <label for="apellidom">Apellido materno:</label>
+          <input type="text" id="apellidom" name="apellidom" value="<%= perfil.getApellidom() %>" required>
+        </div>
 
-          <div class="campo">
-            <label for="correo">Correo electronico:</label>
-            <input type="text" id="correo" name="correo" required>
-          </div>
+        <div class="campo">
+          <label for="correo">Correo electrónico:</label>
+          <input type="text" id="correo" name="correo" value="<%= perfil.getCorreo() %>" required>
+        </div>
 
-          <div class="campo">
-            <label for="matricula">Matricula:</label>
-            <input type="text" id="matricula" name="matricula" required>
-          </div>
-
-          <div class="campo">
-            <label for="f_nac">Fecha de nacimiento:</label>
-            <input type="text" id="f_nac" name="f_nac" required>
-          </div>
-          <button type="submit" class="boton">Guardar cambios</button>
-          <button type="reset" class="boton">Cancelar</button>
-        </form>
-      </div>
+        <div class="campo">
+          <label for="matricula">Matrícula:</label>
+          <input type="text" id="matricula" name="matricula" value="<%= perfil.getMatricula() %>" required>
+        </div>
+        <% } %>
+        <button type="submit" class="boton">Guardar cambios</button>
+        <button type="reset" class="boton">Cancelar</button>
+      </form>
+    </div>
   </main>
   <footer>
     <p>UvBook - Red Social Académica</p>

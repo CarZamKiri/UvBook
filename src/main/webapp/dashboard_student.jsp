@@ -23,7 +23,7 @@
         <ul>
             <li><a href="DashboardServlet">Inicio</a></li>
             <li><a href="TeacherdServlet">Profesores</a></li>
-            <li><a href="perfil.jsp">Mi perfil</a></li>
+            <li><a href="PerfilServlet">Mi perfil</a></li>
             <li><a href="ChatServletUsers">Chat</a></li>
             <li><a href="index.jsp">Cerrar Sesión</a></li>
         </ul>

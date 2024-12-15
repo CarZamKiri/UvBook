@@ -65,4 +65,13 @@
     <url-pattern>/AdminServlet</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>perfilServlet</servlet-name>
+    <servlet-class>PerfilServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>perfilServlet</servlet-name>
+    <url-pattern>/PerfilServlet</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
