@@ -280,7 +280,7 @@ public class Neo4jDAO {
             e.printStackTrace();
         }
     }
-
+/*
     public void obtenerperfil{
 
     }
@@ -288,7 +288,7 @@ public class Neo4jDAO {
     public void modificarperfil{
 
     }
-
+*/
     public void close() {
         if (driver != null) {
             driver.close();
