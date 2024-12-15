@@ -11,14 +11,15 @@
     <body>
         <header>
             <div class="profile">
-                <img src="https://www.uv.mx/veracruz/nutricion/files/2021/04/Flor_con_uv_sin_fondo.png" alt="Profesor">
+                <a href="https://www.uv.mx/">
+                    <img src="https://www.uv.mx/veracruz/nutricion/files/2021/04/Flor_con_uv_sin_fondo.png" alt="Alumno"></a>
                 <h2>Bienvenido, Profesor</h2>
             </div>
             <nav>
                 <ul>
                     <li><a href="DashboardServlet">Inicio</a></li>
                     <li><a href="TeacherdServlet">Profesores</a></li>
-                    <li><a href="perfil.jsp">Mi perfil</a></li>
+                    <li><a href="PerfilServlet">Mi perfil</a></li>
                     <li><a href="ChatServletUsers">Chat</a></li>
                     <li><a href="index.jsp">Cerrar Sesión</a></li>
                 </ul>

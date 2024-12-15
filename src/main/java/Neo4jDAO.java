@@ -286,8 +286,8 @@ public class Neo4jDAO {
                 if (result.hasNext()) {
                     Record record = result.next();
                     String nombre = record.get("nombre").asString();
-                    String apellidop = record.get("ap_paterno").asString();
-                    String apellidom = record.get("ap_materno").asString();
+                    String apellidop = record.get("apellidop").asString();
+                    String apellidom = record.get("apellidom").asString();
                     String matricula = record.get("matricula").asString();
 
                     return new Perfil(nombre, apellidop, apellidom, matricula, correo);
@@ -296,11 +296,20 @@ public class Neo4jDAO {
             });
         }
     }
-/*
-    public void modificarperfil()
 
+    public void modificarperfil(String nombre, String apellidop, String apellidom, String matricula, String correo,
+    String nnombre, String napellidop, String napellidom, String nmatricula, String ncorreo){
+        try (Session session = driver.session()) {
+            session.writeTransaction(tx ->{
+                tx.run("MATCH (e:estudiante{nombre: $nombre, ap_paterno: $apellidop, ap_materno: $apellidom, matricula: $matricula, correo: $correo}) " +
+                        "SET e.nombre = $nnombre, e.ap_paterno = $napellidop, e.ap_materno = $napellidom, e.matricula = $nmatricula, e.correo = $ncorreo ",
+                        parameters("nombre", nombre, "apellidop",apellidop, "apellidom",apellidom, "matricula",matricula, "correo",correo,
+                                "nnombre", nnombre, "napellidop", napellidop, "napellidom", napellidom, "nmatricula", nmatricula, "ncorreo", ncorreo));
+                return null;
+                });
+        }
     }
-*/
+
     public void close() {
         if (driver != null) {
             driver.close();

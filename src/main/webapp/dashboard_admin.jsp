@@ -11,7 +11,8 @@
 <body>
 <header>
     <div class="profile">
-        <img src="https://www.uv.mx/veracruz/nutricion/files/2021/04/Flor_con_uv_sin_fondo.png" alt="Alumno">
+        <a href="https://www.uv.mx/">
+            <img src="https://www.uv.mx/veracruz/nutricion/files/2021/04/Flor_con_uv_sin_fondo.png" alt="Alumno"></a>
         <h2>Bienvenido, admin</h2>
     </div>
     <nav>
