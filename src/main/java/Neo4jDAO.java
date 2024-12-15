@@ -281,6 +281,14 @@ public class Neo4jDAO {
         }
     }
 
+    public void obtenerperfil{
+
+    }
+
+    public void modificarperfil{
+
+    }
+
     public void close() {
         if (driver != null) {
             driver.close();
