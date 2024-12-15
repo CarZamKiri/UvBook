@@ -269,6 +269,18 @@ public class Neo4jDAO {
         return materias;
     }
 
+    public void eliminarPregunta(String texto, String fecha) {
+        try (Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+                tx.run("MATCH (p:Pregunta {texto: $texto, fecha: $fecha}) DETACH DELETE p",
+                        Values.parameters("texto", texto, "fecha", fecha));
+                return null;
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void close() {
         if (driver != null) {
             driver.close();
